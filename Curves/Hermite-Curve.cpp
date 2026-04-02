@@ -18,7 +18,7 @@ using namespace std;
 
 int** calc(int x1,int x2,int y1,int y2 ,int u1 ,int u2 , int v1 , int v2){
 
-    int ** params = new int * [4];
+    int ** params = new int * [4];// as bs
     for (int i = 0; i < 4; ++i)
         params[i] = new int [2];
 
@@ -26,12 +26,12 @@ int** calc(int x1,int x2,int y1,int y2 ,int u1 ,int u2 , int v1 , int v2){
         for (int j = 0; j < 2; ++j)
             params[i][j] = 0;
 
-    int H [4][4] {{2,1,-2,1},{-3,-2,3,-1},{0,1,0,0},{1,0,0,0}};
-    int G [4][2] {{x1,y1},{u1,v1},{x2,y2},{u2,v2}};
+    int H [4][4] {{2,1,-2,1},{-3,-2,3,-1},{0,1,0,0},{1,0,0,0}}; // a , b
+    int G [4][2] {{x1,y1},{u1,v1},{x2,y2},{u2,v2}}; // G
 
     for (int i = 0; i < 4; ++i) // loop for first row H
-        for (int j = 0; j < 2; ++j) // loop for columns
-            for (int k = 0; k < 4 ; ++k)  // loop for vals
+        for (int k = 0; k < 4 ; ++k)  // loop for vals   --> performance
+            for (int j = 0; j < 2; ++j) // loop for columns
                 params [i][j] = params [i][j] + (H[i][k]*G[k][j]);
 
     return params;
@@ -48,7 +48,7 @@ void DrawCurve(HDC hdc , int * X , int * Y ,COLORREF c){
     u1*=3,u2*=3,v1*=3,v2*=3;
     int ** params = calc(x1,x2,y1,y2,u1,u2,v1,v2);
 
-    double delta = 0.00001;
+    double delta = 0.0001; // 1e3 - 1e4
 
 
     for (double t = 0; t <= 1 ; t+=delta) {
